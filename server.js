@@ -36,6 +36,11 @@ app.get('/data', (req, res) => {
   res.json(gyroscopeData);
 });
 
+// Add a health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
