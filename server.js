@@ -1,12 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path'); // Import path module
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
+
+// Serve static files from the "public" directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 const gyroscopeData = []; // Store the latest 10 data frames
 
@@ -23,6 +27,11 @@ app.post('/gyroscope', (req, res) => {
 });
 
 app.get('/dashboard', (req, res) => {
+  // Serve the dashboard.html file
+  res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
+});
+
+app.get('/data', (req, res) => {
   // Serve raw gyroscope data as JSON
   res.json(gyroscopeData);
 });
